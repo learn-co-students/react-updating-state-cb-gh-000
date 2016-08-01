@@ -5,6 +5,7 @@
 1. Explain how to update state in React
 2. Explain the difference between changing state and changing props
 3. Describe what happens when state or props is updated
+4. Describe a React Event (SyntheticEvent)
 
 ## Overview
 
@@ -26,3 +27,4 @@ state.)
 - [Forms](https://facebook.github.io/react/docs/forms.html)
 - [Component API](https://facebook.github.io/react/docs/component-api.html)
 - [Component Lifecycle](https://facebook.github.io/react/docs/component-specs.html)
+- [Events](https://facebook.github.io/react/docs/events.html)
