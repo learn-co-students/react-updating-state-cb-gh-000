@@ -195,10 +195,10 @@ handleClick() {
 ## State changes vs. prop changes
 ![Not the same thing!](http://4.bp.blogspot.com/-YpCHzw3WdTo/UzNBI3BzYKI/AAAAAAAAJoY/S34pUkXKhUU/s1600/aaa.png)
 
-Just a quick sidenote, but it's important to distinguish changes in state and changes in props. Changes in state and/or
-props will both trigger a re-render of our React component. However, changes in state can only happen _internally_ due
-to components changing their own state. Changes in props can only happen _externally_, due to changes in prop values
-being passed in.
+It's important to note the difference between changes in state and changes in props. Changes in state and/or props will
+both trigger a re-render of our React component. However, changes in state can only happen _internally_ due to
+components changing their own state. Changes in props can only happen _externally_, due to changes in prop values being
+passed in.
 
 ## Resources
 - [Transferring props](https://facebook.github.io/react/docs/transferring-props.html)
