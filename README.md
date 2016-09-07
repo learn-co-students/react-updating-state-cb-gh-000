@@ -120,8 +120,34 @@ this.setState({
 ```
 
 See what happened there? It _merged_ the state, but any objects get overwritten, because it doesn't _deeply_ merge the
-state with the object you pass into `this.setState()`. We can solve this using `Object.assign()` by merging the
-`addressInfo` object with the new data ourselves:
+state with the object you pass into `this.setState()`. A deep merge means that the merge will happen recursively, leaving
+any unchanges properties intact. For example, consider the following code sample:
+
+```js
+const house = {
+  kitchen: {
+    cabinets: 'white',
+    table: {
+      legs: 4
+    }
+  }
+};
+
+// Note: `deepMerge()` isn't actually a built-in function
+const updatedHouse = deepMerge(house, {
+  kitchen: {
+    table: {
+      legs: 8
+    }
+  }
+});
+```
+
+Deeply merging like this would only update the `legs` property with a value of `8`, but the rest of the `kitchen` and
+`house` objects' structure will remain intact.
+ 
+ 
+ We can solve this using `Object.assign()` by merging the `addressInfo` object with the new data ourselves:
 
 ```js
 this.setState({
