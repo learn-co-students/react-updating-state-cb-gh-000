@@ -16,8 +16,9 @@ component and is visible in the UI.
 Instead of directly modifying the state using `this.state`, we use `this.setState()`. This is a function available to
 all React components, and allows us to let React know that the component state has changed. This way the components
 knows it should re-render, because its state has changed and its UI will most likely also change. Using a setter
-function like this is very performant: while other frameworks use dirty checking to see if a property has changed, React
-_already knows_ because we used a built-in function to let it know what changes we'd like to make!
+function like this is very performant. While other frameworks like Angular.js use "dirty checking" (continuously
+checking for changes in an object) to see if a property has changed, React _already knows_ because we use a built-in
+function to let it know what changes we'd like to make!
 
 For example, let's say we have a component with a button, and a bit of text to indicate whether that button has been
 pressed yet:
