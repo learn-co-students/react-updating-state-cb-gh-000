@@ -1,7 +1,12 @@
 # React Updating State
 
+## Overview
+
+In this lesson, we'll discuss updating state in React. 
+
 ## Objectives
-1. Explain how to update state in React
+
+1. Update state in React by using `this.setState()` and passing in an object
 2. Describe what happens when state is updated
 3. Explain the difference between changing state and changing props
 
