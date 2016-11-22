@@ -40,7 +40,7 @@ class ClickityClick extends React.Component {
   render() {
     return (
       <div>
-        <p>I have {this.state.hasBeenClicked ? 'not' : null} been clicked yet!</p>
+        <p>I have {this.state.hasBeenClicked ? null : 'not'} been clicked!</p>
         <button onClick={this.handleClick}>Click me!</button>
       </div>
     );
@@ -95,7 +95,7 @@ If we wanted to update the `addressInfo.city` field, you might think we can upda
 
 ```js
 this.setState({
-  address: {
+  addressInfo: {
     city: 'New York City',
   },
 });
@@ -154,7 +154,7 @@ this.setState({
   addressInfo: {
     ...this.state.addressInfo,
     city: 'New York City',
-  }),
+  },
 });
 ```
 
