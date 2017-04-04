@@ -112,7 +112,7 @@ this.setState({
 }
 ```
 
-See what happened there? It _merged_ the state, but any objects get overwritten, because it doesn't _deeply_ merge the state with the object you pass into `this.setState()`. A deep merge means that the merge will happen recursively, leaving any unchanges properties intact. For example, consider the following code sample:
+See what happened there? It _merged_ the state, but any objects get overwritten, because it doesn't _deeply_ merge the state with the object you pass into `this.setState()`. A deep merge means that the merge will happen recursively, leaving any unchanged properties intact. For example, consider the following code sample:
 
 ```js
 const house = {
@@ -211,3 +211,5 @@ It's important to note the difference between changes in state and changes in pr
 ## Resources
 - [Transferring props](https://facebook.github.io/react/docs/transferring-props.html)
 - [Component API](https://facebook.github.io/react/docs/component-api.html)
+
+<p class='util--hide'>View <a href='https://learn.co/lessons/react-updating-state'>Updating State</a> on Learn.co and start learning to code for free.</p>
