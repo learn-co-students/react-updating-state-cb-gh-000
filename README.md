@@ -18,9 +18,14 @@ While a React component can have initial state, the real power is in updating it
 
 Instead of directly modifying the state using `this.state`, we use `this.setState()`. This is a function available to all React components, and allows us to let React know that the component state has changed. This way the components knows it should re-render, because its state has changed and its UI will most likely also change. Using a setter function like this is very performant. While other frameworks like Angular.js use "dirty checking" (continuously checking for changes in an object) to see if a property has changed, React _already knows_ because we use a built-in function to let it know what changes we'd like to make!
 
+Please feel free to follow along with the lesson using the src folder in this project's code. To run the code, make sure to `npm install & npm start` in the terminal.
+
 For example, let's say we have a component with a button, and a bit of text to indicate whether that button has been pressed yet:
 
 ```js
+// src/components/ClickityClick.js
+import React from 'react';
+
 class ClickityClick extends React.Component {
   constructor() {
     super();
@@ -29,11 +34,9 @@ class ClickityClick extends React.Component {
     this.state = {
       hasBeenClicked: false,
     };
-    
-    this.handleClick = this.handleClick.bind(this);
   }
   
-  handleClick() {
+  handleClick = () => {
     // Update our state here...
   }
 
@@ -46,22 +49,40 @@ class ClickityClick extends React.Component {
     );
   }
 }
+
+export default ClickityClick;
+
+// src/index.js
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import ClickityClick from './components/ClickityClick';
+
+ReactDOM.render(
+  <ClickityClick />,
+  document.getElementById('root')
+);
 ```
 
 To update our state, we use `this.setState()` and pass in an object. This object will get merged with the current state.When the state has been updated, our component re-renders automatically. Handy!
 
 ```js
-handleClick() {
+// src/components/ClickityClick.js 
+...
+
+handleClick = () => {
   this.setState({
-    hasBeenClicked: true,
-  });
+    hasBeenClicked: true
+  })
 }
+
+...
 ```
 
 ## How state gets merged
 When updating state, we don't have to pass in the entire state, just the property we want to update. For example, consider the following state for our component:
 
-```
+```js
 {
   hasBeenClicked: false,
   currentTheme: 'blue',
@@ -70,7 +91,7 @@ When updating state, we don't have to pass in the entire state, just the propert
 
 If we updated the `hasBeenClicked` using `this.setState()` like we did above, it would _merge_ the new state with the existing state, resulting in this new state:
 
-```
+```js
 {
   hasBeenClicked: true,
   currentTheme: 'blue',
@@ -79,7 +100,7 @@ If we updated the `hasBeenClicked` using `this.setState()` like we did above, it
 
 One super important thing to note is that it only merges things on the first level. Let's say we're working on a component that lets a user fill in an address, and the component's state is structured like this:
 
-```
+```js
 {
   theme: 'blue',
   addressInfo: {
@@ -103,7 +124,7 @@ this.setState({
 
 **However**, this would result in the following state shape:
 
-```
+```js
 {
   theme: 'blue',
   addressInfo: {
@@ -147,7 +168,7 @@ this.setState({
 });
 ```
 
-**Or**, we could do this using the proposed object spread operator in the next version of JS:
+**Or**, we could do this using the proposed object spread operator in the next version of JS: **RECOMMENDED**
 
 ```js
 this.setState({
@@ -158,11 +179,9 @@ this.setState({
 });
 ```
 
-Note that the object spread operator is not enabled by default in the Babel compilation of this lesson code, so we'll have to stick with `Object.assign()`. Just be aware that there is another way to do this!
-
 Both of these would result in the state updating to this shape:
 
-```
+```js
 {
   theme: 'blue',
   addressInfo: {
@@ -180,12 +199,18 @@ Perfect! Just what we needed.
 One thing to keep in mind is that setting state is _not_ synchronous. For all intents and purposes, it might seem that way, since our components update right away. State updates, however, are _batched_ internally and then executed simultaneously whenever React feels it's appropriate. This might result in some unexpected behavior. Going back to our `ClickityClick` component above, let's log the state after we've set it using `this.setState()`:
 
 ```js
-handleClick() {
+// src/components/ClickityClick.js 
+
+...
+
+handleClick = () => {
   this.setState({
-    hasBeenClicked: true,
-  });
+    hasBeenClicked: true
+  })
   console.log(this.state.hasBeenClicked); // prints false
 }
+
+...
 ```
 
 The console output says `false`... but we just set it to `true`! What is this madness?
@@ -193,14 +218,17 @@ The console output says `false`... but we just set it to `true`! What is this ma
 State changes, however instant they might appear, happen _asynchronously_. If we want to access our new state after it has been updated, we can optionally add a callback as a second argument to the `this.setState()` function. This callback will fire once the state has been updated, ensuring that `this.state` is now the new, shiny updated state. In code:
 
 ```js
-handleClick() {
-  this.setState(
-    { hasBeenClicked: true },
-    function () {
-      console.log(this.state.hasBeenClicked); // prints true
-    }
-  );
+// src/components/ClickityClick.js 
+
+...
+
+handleClick = () => {
+  this.setState({
+    hasBeenClicked: true
+  }, () => console.log(this.state.hasBeenClicked)) // prints true
 }
+
+...
 ```
 
 ## State changes vs. prop changes
