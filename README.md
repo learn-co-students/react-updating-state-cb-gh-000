@@ -64,7 +64,7 @@ ReactDOM.render(
 );
 ```
 
-To update our state, we use `this.setState()` and pass in an object. This object will get merged with the current state.When the state has been updated, our component re-renders automatically. Handy!
+To update our state, we use `this.setState()` and pass in an object. This object will get merged with the current state. When the state has been updated, our component re-renders automatically. Handy!
 
 ```js
 // src/components/ClickityClick.js 
