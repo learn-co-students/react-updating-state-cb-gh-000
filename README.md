@@ -2,7 +2,7 @@
 
 ## Overview
 
-In this lesson, we'll discuss updating state in React. 
+In this lesson, we'll discuss updating state in React.
 
 ## Objectives
 
@@ -12,7 +12,7 @@ In this lesson, we'll discuss updating state in React.
 
 
 ## Updating state
-![Unknown state](https://media.giphy.com/media/fFIaNdVhdvoOc/giphy.gif)
+
 
 While a React component can have initial state, the real power is in updating its state — after all, if we didn't need to update the state, the component shouldn't _have_ any state. State is only reserved for data that _changes_ in our component and is visible in the UI.
 
@@ -29,13 +29,13 @@ import React from 'react';
 class ClickityClick extends React.Component {
   constructor() {
     super();
-    
+
     // Define the initial state:
     this.state = {
       hasBeenClicked: false,
     };
   }
-  
+
   handleClick = () => {
     // Update our state here...
   }
@@ -67,7 +67,7 @@ ReactDOM.render(
 To update our state, we use `this.setState()` and pass in an object. This object will get merged with the current state. When the state has been updated, our component re-renders automatically. Handy!
 
 ```js
-// src/components/ClickityClick.js 
+// src/components/ClickityClick.js
 ...
 
 handleClick = () => {
@@ -156,8 +156,8 @@ const updatedHouse = deepMerge(house, {
 ```
 
 Deeply merging like this would only update the `legs` property with a value of `8`, but the rest of the `kitchen` and `house` objects' structure will remain intact.
- 
- 
+
+
  We can solve this using `Object.assign()` by merging the `addressInfo` object with the new data ourselves:
 
 ```js
@@ -199,7 +199,7 @@ Perfect! Just what we needed.
 One thing to keep in mind is that setting state is _not_ synchronous. For all intents and purposes, it might seem that way, since our components update right away. State updates, however, are _batched_ internally and then executed simultaneously whenever React feels it's appropriate. This might result in some unexpected behavior. Going back to our `ClickityClick` component above, let's log the state after we've set it using `this.setState()`:
 
 ```js
-// src/components/ClickityClick.js 
+// src/components/ClickityClick.js
 
 ...
 
@@ -218,7 +218,7 @@ The console output says `false`... but we just set it to `true`! What is this ma
 State changes, however instant they might appear, happen _asynchronously_. If we want to access our new state after it has been updated, we can optionally add a callback as a second argument to the `this.setState()` function. This callback will fire once the state has been updated, ensuring that `this.state` is now the new, shiny updated state. In code:
 
 ```js
-// src/components/ClickityClick.js 
+// src/components/ClickityClick.js
 
 ...
 
