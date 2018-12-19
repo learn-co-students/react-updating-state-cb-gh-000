@@ -7,9 +7,9 @@ component that will change what it displays based on state.
 
 ## Objectives
 
-1. Update state in React by using `this.setState()` and passing in an object
-2. Describe what happens when state is updated
-3. Explain the difference between changing state and changing props
+1.  Update state in React by using `this.setState()` and passing in an object
+2.  Describe what happens when state is updated
+3.  Explain the difference between changing state and changing props
 
 ## Updating state
 
@@ -46,13 +46,13 @@ class ClickityClick extends React.Component {
 
     // Define the initial state:
     this.state = {
-      hasBeenClicked: false,
+      hasBeenClicked: false
     };
   }
 
   handleClick = () => {
     // Update our state here...
-  }
+  };
 
   render() {
     return (
@@ -72,10 +72,7 @@ import ReactDOM from 'react-dom';
 
 import ClickityClick from './components/ClickityClick';
 
-ReactDOM.render(
-  <ClickityClick />,
-  document.getElementById('root')
-);
+ReactDOM.render(<ClickityClick />, document.getElementById('root'));
 ```
 
 To update our state, we use `this.setState()` and pass in an object. This object
@@ -144,8 +141,8 @@ update it like this:
 ```js
 this.setState({
   addressInfo: {
-    city: 'New York City',
-  },
+    city: 'New York City'
+  }
 });
 ```
 
@@ -190,15 +187,14 @@ Deeply merging like this would only update the `legs` property with a value of
 `8`, but the rest of the `kitchen` and `house` objects' structure will remain
 intact.
 
-
 We can solve this using `Object.assign()` by merging the `addressInfo` object
 with the new data ourselves:
 
 ```js
 this.setState({
   addressInfo: Object.assign({}, this.state.addressInfo, {
-    city: 'New York City',
-  }),
+    city: 'New York City'
+  })
 });
 ```
 
@@ -208,10 +204,18 @@ this.setState({
 this.setState({
   addressInfo: {
     ...this.state.addressInfo,
-    city: 'New York City',
-  },
+    city: 'New York City'
+  }
 });
 ```
+
+> The [spread operator][so] syntax can be used in JavaScript to 'de-compose' objects and
+> arrays. When used on an object as we see above, `...this.state.addressInfo`
+> returns all the keys and values from within that object. We're saying `addressInfo`
+> should be equal to all the keys and values that make up `addressInfo`, and, in
+> addition, there should be `city` key with the value `New York City`. If there
+> is already a `city` key inside `addressInfo`, it will be overwritten. If it
+> doesn't exist, it will be added.
 
 Both of these would result in the state updating to this shape:
 
@@ -283,15 +287,17 @@ It's important to note the difference between changes in state and changes in
 props. Changes in state and/or props will both trigger a re-render of our React
 component. However, changes in state can only happen _internally_ due to
 components changing their own state. Thus, a component can trigger changes in
-its own state. 
+its own state.
 
 A component _cannot_ change its props. Changes in props can only happen
-_externally_, meaning the parent or grandparent component changes the 
+_externally_, meaning the parent or grandparent component changes the
 values it passing down to its children.
 
 ## Resources
 
 - [Transferring props](https://facebook.github.io/react/docs/transferring-props.html)
 - [Component API](https://facebook.github.io/react/docs/component-api.html)
+
+[so]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
 
 <p class='util--hide'>View <a href='https://learn.co/lessons/react-updating-state'>Updating State</a> on Learn.co and start learning to code for free.</p>
