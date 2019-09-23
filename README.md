@@ -157,7 +157,7 @@ this.setState({
 }
 ```
 
-See what happened there? It _merged_ the state, but any objects get overwritten,
+See what happened there? It _merged_ the state, but the other key/value pairs in `addressInfo` get overwritten,
 because it doesn't _deeply_ merge the state with the object you pass into
 `this.setState()`. A deep merge means that the merge will happen recursively,
 leaving any unchanged properties intact. For example, consider the following
