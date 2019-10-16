@@ -7,11 +7,11 @@ component that will change what it displays based on state.
 
 ## Objectives
 
-1.  Update state in React by using `this.setState()` and passing in an object
-2.  Describe what happens when state is updated
-3.  Explain the difference between changing state and changing props
+- Update state in React by using `this.setState()` and passing in an object
+- Describe what happens when state is updated
+- Explain the difference between changing state and changing props
 
-## Updating state
+## Updating State
 
 ![Unknown state](https://media.giphy.com/media/fFIaNdVhdvoOc/giphy.gif)
 
@@ -157,11 +157,11 @@ this.setState({
 }
 ```
 
-See what happened there? It _merged_ the state, but the other key/value pairs in `addressInfo` get overwritten,
-because it doesn't _deeply_ merge the state with the object you pass into
-`this.setState()`. A deep merge means that the merge will happen recursively,
-leaving any unchanged properties intact. For example, consider the following
-code sample:
+See what happened there? It _merged_ the state, but the other key/value pairs in
+`addressInfo` get overwritten, because it doesn't _deeply_ merge the state with
+the object you pass into `this.setState()`. A deep merge means that the merge
+will happen recursively, leaving any unchanged properties intact. For example,
+consider the following code sample:
 
 ```js
 const house = {
@@ -198,7 +198,8 @@ this.setState({
 });
 ```
 
-**Or**, we could do this using the proposed object spread operator in the next version of JS: **RECOMMENDED**
+**Or**, we could do this using the proposed object spread operator in the next
+version of JS: **RECOMMENDED**
 
 ```js
 this.setState({
