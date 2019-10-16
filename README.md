@@ -15,23 +15,23 @@ component that will change what it displays based on state.
 
 ![Unknown state](https://media.giphy.com/media/fFIaNdVhdvoOc/giphy.gif)
 
-While a React component can have initial state, the real power is in updating
+While a React component can have initial state, the real power is in _updating_
 its state — after all, if we didn't need to update the state, the component
 shouldn't _have_ any state. State is only reserved for data that _changes_ in
 our component and is visible in the UI.
 
 Instead of directly modifying the state using `this.state`, we use
-`this.setState()`. This is a function available to all React components, and
-allows us to let React know that the component state has changed. This way the
-component knows it should re-render, because its state has changed and its UI
-will most likely also change. Using a setter function like this is very
-performant. While other frameworks like Angular.js use "dirty checking"
+`this.setState()`. This is a function available to all React components that use
+state, and allows us to let React know that the component state has changed.
+This way the component knows it should re-render, because its state has changed
+and its UI will most likely also change. Using a setter function like this is
+very performant. While other frameworks like Angular.js use "dirty checking"
 (continuously checking for changes in an object) to see if a property has
 changed, React _already knows_ because we use a built-in function to let it know
 what changes we'd like to make!
 
-In this code along, use the src folder in this project's code to follow along.
-To run the code, make sure to `npm install & npm start` in the terminal.
+> **Note**: In this code-along, use the code in the `src` to follow along. To
+> run the code, make sure to `npm install & npm start` in the terminal.
 
 For example, let's say we have a component with a button, and a bit of text to
 indicate whether that button has been pressed yet:
@@ -294,11 +294,160 @@ A component _cannot_ change its props. Changes in props can only happen
 _externally_, meaning the parent or grandparent component changes the
 values it passing down to its children.
 
+## Updating State Based on the Previous State
+
+Very often when we're changing state, the change we're making is relative to the
+previous state. Imagine, for instance, we wanted to use state to keep track of
+the number of times a button is pressed. The component's state might start at
+`0`. When the button is pressed, state should change to `1`. However, if pressed
+again, how exactly do we change state to `2`?
+
+The easiest solution would be to write code that sets state to its **current
+value plus one**. However, when we write this in code and implement `setState`,
+it is important to note that we **should not use `this.state` inside of
+`setState`**.
+
+As mentioned before, `setState` is not synchronous &mdash; in situations where
+there are many state changes being made, multiple `setState` calls may be
+grouped together into one update. If we use `this.state` inside a `setState`, it
+is possible that the values in state are changed by a _different_ `setState`
+just prior to our `setState`.
+
+One way to deal with this is to handle the logic that involves `this.state`
+outside of `setState`. Below is an example of a component that uses this
+approach to keep track of button presses:
+
+```js
+import React, {Component} from 'react';
+
+class ButtonCounter extends Component {
+  constructor() {
+    super()
+    // initial state has count set at 0
+    this.state = {
+      count: 0
+    }
+  }
+
+  handleClick = () => {
+    // when handleClick is called, newCount is set to whatever this.state.count is plus 1 PRIOR to calling this.setState
+    let newCount = this.state.count + 1
+    this.setState({
+      count: newCount
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>{this.state.count}</h1>
+        <button onClick={this.handleClick}>Click Me</button>
+      </div>
+    )
+  }
+}
+
+export default ButtonCounter
+```
+
+This works, but React actually provides a built in solution. Instead of passing an object
+into `setState`, we can also pass a function. That function, when called inside `setState`
+will be passed the component state from when that `setState` was called. This is typically
+referred to as the _previous state_. With this knowledge, we can rewrite the `handleClick`
+function to:
+
+```js
+...
+
+handleClick = () => {
+    this.setState(previousState => {
+      return {
+        count: previousState.count + 1
+      }
+    })
+  }
+
+...
+```
+
+Here, there is no need for a separate variable assignment like
+`let newCount = this.state.count + 1`. It is important that we still
+**return** an object that was in the same structure as before as the
+return value of this function becomes the new state.
+
+Let's look at another example - In the `ClickityClick` example earlier, we were
+changing state from `false` to `true` with a hard-coded `true` in the `setState`.
+What if, instead, we wanted the ability to toggle between `true` and `false`
+repeatedly?
+
+Here again, previous state is very useful. Since we're dealing with a boolean value,
+to toggle from one to the other, we just need to set the state to the _opposite_ of
+whatever it is.
+
+This component, let's call it `LightSwitch`, would look something like this:
+
+```js
+import React from 'react';
+
+class LightSwitch extends React.Component {
+  constructor() {
+    super();
+
+    // Initial state is defined
+    this.state = {
+      toggled: false
+    };
+  }
+
+  // when handleClick is called, setState will update the state so that toggle is reversed
+  handleClick = () => {
+    this.setState(previousState => {
+      return {
+        toggled: !previousState.toggled
+      }
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={this.handleClick}>{this.state.toggled ? "ON" : "OFF"}</button>
+      </div>
+    );
+  }
+}
+
+export default LightSwitch;
+```
+
+When the code above renders, it will display a button labeled `OFF` until it is
+clicked. When clicked, it will display `ON`. Click once more, and it is back to
+`OFF`.
+
+Some additional details on `setState` can be found in [React's official
+documentation][].
+
+## Conclusion
+
+To recap: Using `setState`, we can update a component's state. We frequently use
+events to trigger these updates. `setState` is called asynchronously and merges
+the existing state with whatever object is passed in. We can also pass a
+function to `setState`, which allows us to write state changes that are based on
+the existing state values.
+
+Being able to update state can be extremely useful in many situations. We can
+use state to keep track of incrementing values and toggle-able boolean values. We
+can also use it to keep track of things like timestamps, user inputs, and
+in-line style settings. State can store arrays as well, which we now have the
+ability to update and add to!
+
 ## Resources
 
+- [State and Lifecycle][React's official documentation]
 - [Transferring props](https://facebook.github.io/react/docs/transferring-props.html)
 - [Component API](https://facebook.github.io/react/docs/component-api.html)
 
 [so]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+[React's official documentation]: https://reactjs.org/docs/state-and-lifecycle.html#state-updates-may-be-asynchronous
 
 <p class='util--hide'>View <a href='https://learn.co/lessons/react-updating-state'>Updating State</a> on Learn.co and start learning to code for free.</p>
