@@ -198,8 +198,7 @@ this.setState({
 });
 ```
 
-**Or**, we could do this using the proposed object spread operator in the next
-version of JS: **RECOMMENDED**
+**Or**, we could do this the **RECOMMENDED** way, by using the spread operator in JS:
 
 ```js
 this.setState({
