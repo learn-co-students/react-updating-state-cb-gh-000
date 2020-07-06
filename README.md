@@ -9,7 +9,8 @@ component that will change what it displays based on state.
 
 - Update state in React by using `this.setState()` and passing in an object
 - Describe what happens when state is updated
-- Explain the difference between changing state and changing props
+- Explain the difference between changing state and changing propshhlearn subnmit
+- 
 
 ## Updating State
 
