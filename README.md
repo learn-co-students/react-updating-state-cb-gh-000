@@ -448,5 +448,3 @@ ability to update and add to!
 
 [so]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
 [React's official documentation]: https://reactjs.org/docs/state-and-lifecycle.html#state-updates-may-be-asynchronous
-
-<p class='util--hide'>View <a href='https://learn.co/lessons/react-updating-state'>Updating State</a> on Learn.co and start learning to code for free.</p>
